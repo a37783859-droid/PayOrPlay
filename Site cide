@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameMarket — Игровая биржа</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b0d12;
+            color: white;
+        }
+
+        header {
+            height: 70px;
+            background: #11141b;
+            border-bottom: 1px solid #242936;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #6c5ce7;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #bfc3ce;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .login {
+            background: #6c5ce7;
+            border: none;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px 45px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #6c5ce7;
+        }
+
+        .hero p {
+            color: #9da3b0;
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .search {
+            max-width: 650px;
+            margin: auto;
+            display: flex;
+            background: #151922;
+            border: 1px solid #292f3b;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .search input {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 15px;
+        }
+
+        .search button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .section-title h2 {
+            font-size: 24px;
+        }
+
+        .section-title a {
+            color: #8f82ff;
+            text-decoration: none;
+        }
+
+        .categories {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category {
+            min-width: 130px;
+            background: #151922;
+            border: 1px solid #292f3b;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .category:hover {
+            border-color: #6c5ce7;
+            transform: translateY(-2px);
+        }
+
+        .category .icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .category p {
+            color: #c5c9d3;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: #151922;
+            border: 1px solid #292f3b;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #6c5ce7;
+        }
+
+        .card-image {
+            height: 145px;
+            background: #202532;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .game {
+            color: #8f82ff;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .seller {
+            color: #858b98;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .buy {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 70px;
+            padding: 35px 20px;
+            background: #11141b;
+            border-top: 1px solid #242936;
+            text-align: center;
+            color: #777e8c;
+        }
+
+        footer a {
+            color: #9299a8;
+            margin: 0 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 0 15px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .search button {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Game<span>Market</span></div>
+
+    <nav>
+        <a href="#">Главная</a>
+        <a href="#">Игры</a>
+        <a href="#">Маркет</a>
+        <a href="#">Продать</a>
+    </nav>
+
+    <button class="login" onclick="login()">Войти</button>
+</header>
+
+<section class="hero">
+    <h1>Игровая <span>биржа</span></h1>
+
+    <p>
+        Покупай и продавай игровые товары и услуги
+    </p>
+
+    <div class="search">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Поиск игры или товара..."
+        >
+
+        <button onclick="searchProducts()">
+            Найти
+        </button>
+    </div>
+</section>
+
+<main class="container">
+
+    <div class="section-title">
+        <h2>Популярные игры</h2>
+        <a href="#">Все игры →</a>
+    </div>
+
+    <div class="categories">
+
+        <div class="category">
+            <div class="icon">🎮</div>
+            <p>Roblox</p>
+        </div>
+
+        <div class="category">
+            <div class="icon">⛏️</div>
+            <p>Minecraft</p>
+        </div>
+
+        <div class="category">
+            <div class="icon">🔫</div>
+            <p>CS2</p>
+        </div>
+
+        <div class="category">
+            <div class="icon">⚔️</div>
+            <p>Fortnite</p>
+        </div>
+
+        <div class="category">
+            <div class="icon">🔥</div>
+            <p>Другие</p>
+        </div>
+
+    </div>
+
+    <div class="section-title">
+        <h2>Популярные товары</h2>
+        <a href="#">Смотреть все →</a>
+    </div>
+
+    <div class="products" id="products">
+
+        <div class="card">
+            <div class="card-image">🎮</div>
+
+            <div class="card-content">
+                <div class="game">ROBLOX</div>
+
+                <h3>Игровая услуга</h3>
+
+                <div class="seller">
+                    Продавец: Player123 ⭐ 4.9
+                </div>
+
+                <div class="bottom">
+                    <div class="price">100 ₽</div>
+
+                    <button class="buy" onclick="buyProduct('Игровая услуга')">
+                        Купить
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image">⛏️</div>
+
+            <div class="card-content">
+                <div class="game">MINECRAFT</div>
+
+                <h3>Игровой предмет</h3>
+
+                <div class="seller">
+                    Продавец: MinePro ⭐ 5.0
+                </div>
+
+                <div class="bottom">
+                    <div class="price">250 ₽</div>
+
+                    <button class="buy" onclick="buyProduct('Игровой предмет')">
+                        Купить
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image">⚔️</div>
+
+            <div class="card-content">
+                <div class="game">FORTNITE</div>
+
+                <h3>Игровой предмет</h3>
+
+                <div class="seller">
+                    Продавец: GamerX ⭐ 4.8
+                </div>
+
+                <div class="bottom">
+                    <div class="price">500 ₽</div>
+
+                    <button class="buy" onclick="buyProduct('Игровой предмет')">
+                        Купить
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>© 2026 GameMarket</p>
+
+    <br>
+
+    <a href="#">Условия использования</a>
+    <a href="#">Конфиденциальность</a>
+    <a href="#">Возвраты</a>
+    <a href="#">Поддержка</a>
+</footer>
+
+<script>
+
+    function login() {
+        alert("Здесь позже будет система регистрации и входа.");
+    }
+
+    function buyProduct(product) {
+        alert("Вы выбрали: " + product);
+    }
+
+    function searchProducts() {
+
+        const query =
+            document.getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        const cards =
+            document.querySelectorAll(".card");
+
+        cards.forEach(card => {
+
+            const text =
+                card.innerText.toLowerCase();
+
+            if (text.includes(query)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+
+        });
+
+    }
+
+</script>
+
+</body>
+</html>
